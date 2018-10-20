@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using InternetShop.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternetShop
 {
@@ -21,7 +23,11 @@ namespace InternetShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add framework services.
             services.AddMvc();
+
+            services.AddDbContext<ShopContext>(options =>
+                    options.UseSqlite("Data Source=MvcMovie.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
