@@ -11,14 +11,15 @@ namespace InternetShop.Controllers
 {
     public class ShopController : Controller
     {
-        // GET: /<controller>/
-        public IActionResult Index()
+        DbService dbService = new DbService();
+
+        public IActionResult GetAllProducts()
         {
-            DbService dbService = new DbService();
+            var result = dbService.getAllProductsFromInventory();
+            var jsonResult = new JsonResult(result);
 
-            dbService.getAllProductsFromInventory();
-
-            return View();
+            return jsonResult;
+            //return View();
         }
     }
 }
