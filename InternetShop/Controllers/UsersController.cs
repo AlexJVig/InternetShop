@@ -9,6 +9,7 @@ namespace InternetShop.Controllers
     {
         UserService userService = new UserService();
 
+        // TODO: Add registration too.
         public IActionResult AttemptLogin(LoginDetails details)
         {
             return new JsonResult(userService.AttemptLogin(details));
