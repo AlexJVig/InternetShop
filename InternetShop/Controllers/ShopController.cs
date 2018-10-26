@@ -11,7 +11,7 @@ namespace InternetShop.Controllers
 {
     public class ShopController : Controller
     {
-        DbService dbService = new DbService();
+        ShopService dbService = new ShopService();
 
         public IActionResult GetAllProducts()
         {

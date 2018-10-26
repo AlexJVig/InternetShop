@@ -6,16 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InternetShop.Services
 {
-    public class DbService
+    public class ShopService
     {
         public List<Product> getAllProductsFromInventory()
         {
             using (var context = new ShopContext())
             {
-                //var blogs = context.Products.Where;
-                var products = context.Products.Where(p => p.ProductID == 1);
-
-                return products.ToList();
+                return context.Products.ToList();
             }
         }
     }

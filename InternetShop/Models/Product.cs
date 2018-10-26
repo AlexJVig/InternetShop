@@ -17,5 +17,11 @@ namespace InternetShop.Models
         public int CategoryID { get; set; }
 
         public string ProductName { get; set; }
+
+        public string Image
+        {
+            get;
+            set;
+        }
     }
 }
