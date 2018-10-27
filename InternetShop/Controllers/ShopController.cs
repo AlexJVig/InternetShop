@@ -11,15 +11,16 @@ namespace InternetShop.Controllers
 {
     public class ShopController : Controller
     {
-        ShopService dbService = new ShopService();
+        ShopService shopService = new ShopService();
 
         public IActionResult GetAllProducts()
         {
-            var result = dbService.getAllProductsFromInventory();
-            var jsonResult = new JsonResult(result);
+            return new JsonResult(shopService.GetAllProductsFromInventory());
+        }
 
-            return jsonResult;
-            //return View();
+        public IActionResult GetAllCategories()
+        {
+            return new JsonResult(shopService.GetAllCategories());
         }
     }
 }
