@@ -1,4 +1,4 @@
-﻿body {
+body {
     padding-bottom: 20px;
 }
 
@@ -48,6 +48,9 @@ h1 {
     margin-bottom: 0;
 }
 
+.close {
+    margin-bottom: 10px;
+}
 
 /***************************/
 /* for categories side bar */
