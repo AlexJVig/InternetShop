@@ -20,7 +20,7 @@ namespace InternetShop.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View(sp.Branches.ToList());
+            return View(sp.Branches.AsEnumerable());
         }
 
         public IActionResult Contact()
