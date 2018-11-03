@@ -10,16 +10,17 @@ namespace InternetShop.Controllers
 {
     public class HomeController : Controller
     {
+        ShopContext sp = new ShopContext();
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Branches()
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return View(sp.Branches.AsEnumerable());
         }
 
         public IActionResult Contact()
