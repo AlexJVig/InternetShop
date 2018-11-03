@@ -15,7 +15,7 @@ namespace InternetShop.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Branches()
         {
             ViewData["Message"] = "Your application description page.";
 
