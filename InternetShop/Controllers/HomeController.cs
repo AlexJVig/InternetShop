@@ -22,7 +22,7 @@ namespace InternetShop.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Products()
         {
             ViewData["Message"] = "Your contact page.";
 
