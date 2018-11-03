@@ -10,6 +10,7 @@ namespace InternetShop.Controllers
 {
     public class HomeController : Controller
     {
+        ShopContext sp = new ShopContext();
         public IActionResult Index()
         {
             return View();
@@ -19,7 +20,7 @@ namespace InternetShop.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return View(sp.Branches.ToList());
         }
 
         public IActionResult Contact()
