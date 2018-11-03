@@ -1,7 +1,27 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Branches";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information. Check-in attempt!!!</p>
+<div class="row">
+    <div class="col-sm-3" style="margin-top:10px;">
+        <ul class="list-group">
+            <li type="button" class="list-group-item">Ashdod</li>
+            <li type="button" class="list-group-item">Be'er Sheva</li>
+            <li type="button" class="list-group-item" >Hadera</li>
+            <li type="button" class="list-group-item">Jerusalem</li>
+            <li type="button" class="list-group-item">Shoham</li>
+            <li type="button" class="list-group-item">Tel-Aviv</li>
+        </ul>
+    </div>
+    <div class="col-sm-9">
+        <div id='printoutPanel'></div>
+        <div id='myMap' style='position:relative;width:800px;height:600px;margin-top:10px;'></div>
+    </div>
+</div>
+<script type='text/javascript'>
+    function loadMapScenario() {
+        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {});
+
+    }
+</script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=Aoe9qNuzrXqzV9N97QUrO_TDmXB1mKLe9cSAsj6MhBvWV5GfJwFnmzs1KxxbG-BG&callback=loadMapScenario' async defer></script>
