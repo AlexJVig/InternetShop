@@ -561,3 +561,12 @@ h1 {
 .chiller-theme .mCSB_scrollTools .mCSB_draggerRail {
     background-color: transparent;
 }
+
+/*-----------------------------Branches-----------------------------*/
+.branch-list-item {
+    cursor: pointer;
+}
+
+    .branch-list-item:hover {
+        background: #f2f2f2;
+    }
