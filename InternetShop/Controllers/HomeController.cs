@@ -25,15 +25,9 @@ namespace InternetShop.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Contact(string searchTerm)
         {
-            //ViewData["Message"] = "Your contact page.";
-
-            //return View();
-            using (var context = new ShopContext())
-            {
-                return View(context.Products.ToList());
-            }
+            return View(shopService.SearchProducts(searchTerm ?? string.Empty));
         }
 
         public IActionResult SearchProducts(string term)
