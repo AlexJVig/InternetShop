@@ -41,5 +41,31 @@ namespace InternetShop.Services
                                  .ToList();
             }
         }
+
+        public IList<Product> SearchProducts(string term)
+        {
+            using (var context = new ShopContext())
+            {
+                return context.Products.Where(p => p.ProductName.Contains(term) || p.Description.Contains(term)).ToList();
+            }
+        }
+
+        public bool CreateProduct(Product product)
+        {
+            using (var context = new ShopContext())
+            {
+                try
+                {
+                    context.Products.Add(product);
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
     }
 }
