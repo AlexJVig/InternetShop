@@ -11,12 +11,9 @@ namespace InternetShop.Controllers
 {
     public class HomeController : Controller
     {
-<<<<<<< HEAD
         ShopContext sp = new ShopContext();
-=======
         ShopService shopService = new ShopService();
 
->>>>>>> d1fbafb2ee1b903d6d49f0a0dd38f37d1198b45e
         public IActionResult Index()
         {
             return View();
