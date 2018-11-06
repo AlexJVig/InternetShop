@@ -48,6 +48,25 @@ h1 {
     margin-bottom: 0;
 }
 
+
+#product-image {
+    width: 200px;
+    height: 200px;
+}
+
+.row-title {
+    padding-left: 0;
+    font-weight: bold;
+}
+
 .product-detail-row {
-    margin: 10px 0;
+    margin-bottom: 10px;
+}
+
+.card {
+    margin-bottom: 30px;
+}
+
+.product-info {
+    overflow: hidden;
 }

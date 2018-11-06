@@ -67,5 +67,14 @@ namespace InternetShop.Services
                 return true;
             }
         }
+
+        public ProductResult GetProduct(int id)
+        {
+            using (var context = new ShopContext())
+            {
+                return context.Products.Join(context.Categories, p => p.CategoryID, c => c.CategoryID, (product, category) => new ProductResult(product, category)).FirstOrDefault(p => p.ProductID == id);
+              
+            }
+        }
     }
 }
