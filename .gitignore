@@ -41,3 +41,5 @@ Thumbs.db
 *.dotCover
 
 InternetShop/bower_components/
+
+InternetShop/obj/

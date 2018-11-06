@@ -7,9 +7,13 @@
 <div class="row">
     <div class="col-sm-3" style="margin-top:10px;">
         <ul class="list-group">
+            <li type="button" class="list-group-item branch-list-item">
+                Branch / City Name
+            </li>
+            
             @foreach (var item in Model)
             {
-            <li type="button" class="list-group-item branch-list-item">
+            <li type="button" class="list-group-item branch-list-item" branchId="@item.BranchID">
                 @item.City
             </li>
             }
@@ -77,5 +81,10 @@
         Microsoft.Maps.Events.addHandler(infobox, 'infoboxChanged', () => { infoboxClosed(); });
         infobox.setMap(map);
     }
+
+    // Handel list iten click
+    $(".branch-list-item").click(function () {
+        branchSelected(null, $(this).attr('branchId'));
+    });
 </script>
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario' async defer></script>
