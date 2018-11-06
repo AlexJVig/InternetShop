@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using InternetShop.Models;
 using InternetShop.Services;
 
+
 namespace InternetShop.Controllers
 {
     public class HomeController : Controller
@@ -26,7 +27,7 @@ namespace InternetShop.Controllers
             return View(sp.Branches.AsEnumerable());
         }
 
-        public IActionResult Contact(string searchTerm)
+        public IActionResult Products(string searchTerm)
         {
             return View(shopService.SearchProducts(searchTerm ?? string.Empty));
         }
@@ -39,6 +40,19 @@ namespace InternetShop.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult GetProduct(int id)
+        {
+            var product = shopService.GetProduct(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
         }
     }
 }
