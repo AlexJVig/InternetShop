@@ -12,5 +12,9 @@ namespace InternetShop.Models
         public double Latitude { get; set; }
 
         public double Longitude { get; set; }
+
+        public string OpeningHours { get; set; }
+
+        public string PhoneNumber { get; set; }
     }
 }
