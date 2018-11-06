@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Songer';
+    src: url('../fonts/songer.otf');
+}
+
 body {
     padding-bottom: 20px;
 }
@@ -73,6 +78,14 @@ h1 {
 
 .search-form {
     margin-bottom: 30px;
+}
+
+.logo {
+    text-shadow: 0 0 6px black;
+    color: white;
+    font-weight: bold;
+    font-family: 'Songer', serif;
+    letter-spacing: 1px;
 }
 
 /*-----------------------------Branches-----------------------------*/
