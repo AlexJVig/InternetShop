@@ -72,7 +72,10 @@ namespace InternetShop.Services
         {
             using (var context = new ShopContext())
             {
-                return context.Products.Join(context.Categories, p => p.CategoryID, c => c.CategoryID, (product, category) => new ProductResult(product, category)).FirstOrDefault(p => p.ProductID == id);
+                return context.Products
+                    .Join(context.Categories, p => p.CategoryID, c => c.CategoryID, (product, category) => new ProductResult(product, category))
+                    .GroupJoin(context.Inventory, p => p.ProductID, i=> i.ProductID, (product, inventory)=> new ProductResult(product, inventory))
+                    .FirstOrDefault(p => p.ProductID == id);
               
             }
         }

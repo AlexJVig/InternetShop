@@ -48,9 +48,9 @@
 
     <main class="page-content">
         <div class="container-fluid">
-            <form asp-controller="Home" asp-action="Products" class="form-inline">
+            <form asp-controller="Home" asp-action="Products" class="form-inline search-form">
                 <input class="form-control mr-sm-2" type="text" name="SearchTerm" placeholder="Search" aria-label="Search">
-                <input type="submit" value="Filter" />
+                <input type="submit" class="btn btn-default" value="Filter" />
             </form>
             <!--<div class="row">-->
             @foreach (var product in Model)
@@ -176,6 +176,8 @@
             $('#productModal #product-price').html(product.price);
             $('#productModal #product-category').html(product.category.name);
             $('#productModal #product-description').html(product.description);
+            var stockIcon = product.isInStock ? "glyphicon-ok" : "glyphicon-remove";
+            $('#productModal #product-in-stock').html("<span class=\"glyphicon " + stockIcon + "\" aria-hidden=\"true\"></span>");
             $('#productModal #product-image').attr('src', product.image);
 
             $('#productModal').modal();
@@ -183,7 +185,6 @@
             alert('failed to fetch product');
         })
 
-        
     })
 
 });</script>

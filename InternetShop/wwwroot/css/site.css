@@ -71,6 +71,10 @@ h1 {
     overflow: hidden;
 }
 
+.search-form {
+    margin-bottom: 30px;
+}
+
 /*-----------------------------Branches-----------------------------*/
 .branch-list-item {
     cursor: pointer;
