@@ -9,9 +9,9 @@
         <ul class="list-group">
             @foreach (var item in Model)
             {
-                <li type="button" class="list-group-item branch-list-item">
-                    @item.City
-                </li>
+            <li type="button" class="list-group-item branch-list-item">
+                @item.City
+            </li>
             }
         </ul>
     </div>
@@ -31,9 +31,9 @@
         infobox.setOptions({
             location: args.target.getLocation(),
             title: args.target.metadata.city,
-            // description: args.target.metadata.description,
+            description: "&#8226 " + args.target.metadata.address + "<br>&#8226 " + args.target.metadata.phoneNumber + "<br>&#8226 " + args.target.metadata.openingHours,
             visible: true
-        }); 
+        });
     }
 
     // When the user closes the infobox the map zooms out
@@ -62,13 +62,18 @@
         for (var i = 0; i < branches.length; i++) {
             location = new Microsoft.Maps.Location(branches[i].latitude, branches[i].longitude);
             pushpin = new Microsoft.Maps.Pushpin(location, { icon: base64Image });
-            pushpin.metadata = branches[i]; 
+            pushpin.metadata = branches[i];
             map.entities.push(pushpin);
             Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => { branchSelected(args); });
         }
 
         // Add the generic infobox, set to invisible
-        infobox = new Microsoft.Maps.Infobox(location, { visible: false, showPointer: false });
+        infobox = new Microsoft.Maps.Infobox(location, {
+            visible: false,
+            showPointer: false,
+            maxHeight: 1500,
+            offset: new Microsoft.Maps.Point(0,50)
+        });
         Microsoft.Maps.Events.addHandler(infobox, 'infoboxChanged', () => { infoboxClosed(); });
         infobox.setMap(map);
     }
