@@ -569,3 +569,10 @@ h1 {
     .branch-list-item:hover {
         background: #f2f2f2;
     }
+
+li.branch-list-title {
+    background-color: lightgray;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
