@@ -1,8 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Products";
-}
-<link rel="stylesheet" href="~/css/sidebar.css" />
+﻿@model IEnumerable<Product>
 
+@{
+    ViewData["Title"] = "Products";
+    var i = 0;
+}
 <div class="page-wrapper chiller-theme toggled">
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
         <i class="fas fa-bars"></i>
@@ -44,78 +45,38 @@
 
     <main class="page-content">
         <div class="container-fluid">
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <form asp-controller="Home" asp-action="Products" class="form-inline">
+                <input class="form-control mr-sm-2" type="text" name="SearchTerm" placeholder="Search" aria-label="Search">
+                <input type="submit" value="Filter" />
             </form>
-
-            <div class="row">
+            <!--<div class="row">-->
+            @foreach (var product in Model)
+            {
+                if (i == 2)
+                {
+                    i = 0;
+                    //@:</div><div class="row">
+                }
                 <div class="col-sm-4">
                     <div class="card">
-                        <img class="card-img-top" src="~/images/product.png" alt="Card image cap">
+                        <img class="card-img-top" src="@product.Image" alt="@product.ProductName" style='display:block; width:150px;height:150px;'>
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h5 class="card-title">@product.ProductName</h5>
+                            <p class="card-text">@product.Description</p>
                             <a href="#" class="btn btn-primary view-product-btn">Go somewhere</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <img class="card-img-top" src="~/images/product.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary view-product-btn">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <img class="card-img-top" src="~/images/product.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary view-product-btn">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="card">
-                        <img class="card-img-top" src="~/images/product.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary view-product-btn">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <img class="card-img-top" src="~/images/product.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary view-product-btn">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <img class="card-img-top" src="~/images/product.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary view-product-btn">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+                if (i == 2)
+                {
+                    i = 0;
+                }
+                else
+                {
+                    ++i;
+                }
+            }
+            <!--</div>-->
 
             <!-- Modal -->
             <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -144,10 +105,8 @@
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -158,10 +117,9 @@
 </div>
 <!-- page-wrapper -->
 
-<script>
-    jQuery(function ($) {
+<script>jQuery(function($) {
 
-        $(".sidebar-dropdown > a").click(function () {
+        $(".sidebar-dropdown > a").click(function() {
             $(".sidebar-submenu").slideUp(200);
             if (
                 $(this)
@@ -183,17 +141,16 @@
             }
         });
 
-        $("#close-sidebar").click(function () {
+        $("#close-sidebar").click(function() {
             $(".page-wrapper").removeClass("toggled");
         });
-        $("#show-sidebar").click(function () {
+        $("#show-sidebar").click(function() {
             $(".page-wrapper").addClass("toggled");
         });
 
 
-        $(".view-product-btn").click(function () {
-            $('#productModal').modal();
-        })
+    $(".view-product-btn").click(function () {
+        $('#productModal').modal();
+    })
 
-    });
-</script>
+});</script>

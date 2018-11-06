@@ -1,32 +1,39 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using InternetShop.Models;
+using InternetShop.Services;
 
 namespace InternetShop.Controllers
 {
     public class HomeController : Controller
     {
+        ShopContext sp = new ShopContext();
+        ShopService shopService = new ShopService();
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Branches()
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return View(sp.Branches.AsEnumerable());
         }
 
-        public IActionResult Products()
+        public IActionResult Products(string searchTerm)
         {
-            ViewData["Message"] = "Your contact page.";
+            return View(shopService.SearchProducts(searchTerm ?? string.Empty));
+        }
 
-            return View();
+        public IActionResult SearchProducts(string term)
+        {
+            return View(shopService.SearchProducts(term));
         }
 
         public IActionResult Error()

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using InternetShop.Models;
 using InternetShop.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +18,32 @@ namespace InternetShop.Controllers
         public IActionResult GetAllCategories()
         {
             return new JsonResult(shopService.GetAllCategories());
+        }
+
+        public IActionResult SearchProducts(string term)
+        {
+            return View(shopService.SearchProducts(term));
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduct(Product product)
+        {
+            if (shopService.CreateProduct(product))
+                return Ok();
+            else
+                return StatusCode(500);
+        }
+
+        [HttpPut]
+        public IActionResult UpdateProduct(int id)
+        {
+            return null;
+        }
+
+        [HttpDelete]
+        public IActionResult DelectProduct(int id)
+        {
+            return null;
         }
     }
 }
