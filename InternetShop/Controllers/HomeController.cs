@@ -54,5 +54,11 @@ namespace InternetShop.Controllers
 
             return Ok(product);
         }
+
+        [HttpGet]
+        public IActionResult GetBranches()
+        {
+            return Ok(sp.Branches.AsEnumerable());
+        }
     }
 }

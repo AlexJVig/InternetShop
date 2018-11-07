@@ -119,12 +119,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Branch</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                    <select class="form-control" id="branchesList">
                                     </select>
                                 </div>
                             </div>
@@ -194,7 +189,20 @@
         jQuery(function ($) {
 
             $("#registerBtn").click(function () {
+                $.ajax('/Home/GetBranches').done(function (branches) {
+                
+                var options = '';
+                for (i=0; i<branches.length; i++) {
+                    options += '<option value=' + branches[i].branchID + '>' + branches[i].city + '</option>';
+                }
+
+                $('#registerModal #branchesList').html(options);
+
                 $('#registerModal').modal();
+
+                }).fail(function () {
+                    alert('failed to fetch branches');
+                })
             })
 
             $("#loginBtn").click(function () {
