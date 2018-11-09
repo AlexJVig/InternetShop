@@ -15,6 +15,11 @@ body {
 }
 
 /* Carousel */
+.slide {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
 .carousel-caption p {
     font-size: 20px;
     line-height: 1.4;
@@ -46,7 +51,13 @@ h1 {
 }
 
 .login {
-    margin-top: 10px;
+    display: flex;
+    /* align-items: flex-end; */
+    /* align-content: flex-end; */
+    justify-content: flex-end;
+    /* align-self: flex-end; */
+    /*padding-right: 0px;*/
+}
 }
 
 .navbar {
@@ -110,6 +121,15 @@ h1 {
     width: 40px;
     border-radius: 10px;
     margin: 5px;
+}
+
+.header  {
+    display: flex;
+    align-items: center;
+}
+
+.collapse {
+    padding: 0px;
 }
 /*-----------------------------Branches-----------------------------*/
 .branch-list-item {
