@@ -34,6 +34,8 @@ namespace InternetShop.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("User");
+            HttpContext.Session.Remove("IsAdmin");
+
             return Ok();
         }
 
