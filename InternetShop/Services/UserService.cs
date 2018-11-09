@@ -11,38 +11,26 @@ namespace InternetShop.Services
         public LoginResult AttemptLogin(LoginDetails input)
         {
             if (input == null)
+                return LoginResult.Failed;
+
+            using (var context = new ShopContext())
             {
+                var userDetails = context.Users.Where(p => p.Username == input.Username).FirstOrDefault();
+
+                if (userDetails == null)
+                    return LoginResult.Failed;
+
+                var encryptedPassword = convertToMd5(input.Password);
+                var token = convertToMd5(DateTime.Now.ToString());
+
+                if (!encryptedPassword.Equals(userDetails.Password))
+                    return LoginResult.Failed;
+
                 return new LoginResult()
                 {
-                    LoginSucceeded = false,
-                    Token = null
+                    LoginSucceeded = true,
+                    Token = token
                 };
-            }
-            else
-            {
-                using (var context = new ShopContext())
-                {
-                    var userDetails = context.Users.Where(p => p.Username == input.Username).FirstOrDefault();
-                    var encryptedPassword = convertToMd5(input.Password);
-                    var token = convertToMd5(DateTime.Now.ToString());
-
-                    if (encryptedPassword.Equals(userDetails.Password))
-                    {
-                        return new LoginResult()
-                        {
-                            LoginSucceeded = true,
-                            Token = token
-                        };
-                    }
-                    else
-                    {
-                        return new LoginResult()
-                        {
-                            LoginSucceeded = false,
-                            Token = null
-                        };
-                    }
-                }
             }
         }
 
@@ -70,7 +58,7 @@ namespace InternetShop.Services
                     ClosestBranchID = input.ClosestBranchID,
                     Username = input.Username,
                     Password = convertToMd5(input.Password),
-                    IsAdmin = false
+                    IsAdmin = 0
                 };
 
                 try

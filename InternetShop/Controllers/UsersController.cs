@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using InternetShop.Models;
 using InternetShop.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,9 @@ namespace InternetShop.Controllers
         // TODO: Add registration too.
         public IActionResult AttemptLogin(LoginDetails details)
         {
-            return new JsonResult(userService.AttemptLogin(details));
+            LoginResult result = userService.AttemptLogin(details);
+            HttpContext.Session.Set("User", Encoding.ASCII.GetBytes(details.Username));
+            return new JsonResult(result);
         }
 
         public IActionResult Register(RegisterDetails details)
@@ -21,6 +24,12 @@ namespace InternetShop.Controllers
                 return Ok();
 
             return StatusCode(500);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("User");
+            return Ok();
         }
 
         public IActionResult CheckName(string username)

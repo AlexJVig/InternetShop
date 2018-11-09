@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using InternetShop.Models;
 using InternetShop.Services;
-
+using System.Text;
 
 namespace InternetShop.Controllers
 {
@@ -15,13 +15,24 @@ namespace InternetShop.Controllers
         ShopContext sp = new ShopContext();
         ShopService shopService = new ShopService();
 
+        private string GetActiveUser()
+        {
+            byte[] user;
+            if (HttpContext.Session.TryGetValue("User", out user))
+                return Encoding.ASCII.GetString(user);
+
+            return null;
+        }
+
         public IActionResult Index()
         {
+            ViewData["User"] = GetActiveUser();
             return View();
         }
 
         public IActionResult Branches()
         {
+            ViewData["User"] = GetActiveUser();
             ViewData["Message"] = "Your application description page.";
 
             return View(sp.Branches.AsEnumerable());
@@ -29,6 +40,7 @@ namespace InternetShop.Controllers
 
         public IActionResult Products(string searchTerm)
         {
+            ViewData["User"] = GetActiveUser();
             return View(shopService.SearchProducts(searchTerm ?? string.Empty));
         }
 
