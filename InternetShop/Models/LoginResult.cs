@@ -17,5 +17,11 @@ namespace InternetShop.Models
         public LoginResult()
         {
         }
+
+        public static LoginResult Failed = new LoginResult()
+        {
+            LoginSucceeded = false,
+            Token = null
+        };
     }
 }
