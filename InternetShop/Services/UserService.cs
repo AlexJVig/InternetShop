@@ -91,5 +91,13 @@ namespace InternetShop.Services
 
             return sb.ToString();
         }
+
+        public User GetUser(string userName)
+        {
+            using (var context = new ShopContext())
+            {
+                return context.Users.FirstOrDefault(u => u.Username == userName);
+            }
+        }
     }
 }

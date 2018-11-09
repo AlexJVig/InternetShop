@@ -15,24 +15,30 @@ namespace InternetShop.Controllers
         ShopContext sp = new ShopContext();
         ShopService shopService = new ShopService();
 
-        private string GetActiveUser()
+        private void LoadUserData()
         {
-            byte[] user;
-            if (HttpContext.Session.TryGetValue("User", out user))
-                return Encoding.ASCII.GetString(user);
+            byte[] userBytes;
+            string user = null;
+            if (HttpContext.Session.TryGetValue("User", out userBytes))
+                user = Encoding.ASCII.GetString(userBytes);
+            ViewData["User"] = user;
 
-            return null;
+            byte[] isAdminBytes;
+            bool isAdmin = false;
+            if (HttpContext.Session.TryGetValue("IsAdmin", out isAdminBytes))
+                isAdmin = BitConverter.ToBoolean(isAdminBytes, 0);
+            ViewData["IsAdmin"] = isAdmin;
         }
 
         public IActionResult Index()
         {
-            ViewData["User"] = GetActiveUser();
+            LoadUserData();
             return View();
         }
 
         public IActionResult Branches()
         {
-            ViewData["User"] = GetActiveUser();
+            LoadUserData();
             ViewData["Message"] = "Your application description page.";
 
             return View(sp.Branches.AsEnumerable());
@@ -40,7 +46,7 @@ namespace InternetShop.Controllers
 
         public IActionResult Products(string searchTerm)
         {
-            ViewData["User"] = GetActiveUser();
+            LoadUserData();
             return View(shopService.SearchProducts(searchTerm ?? string.Empty));
         }
 

@@ -14,7 +14,12 @@ namespace InternetShop.Controllers
         public IActionResult AttemptLogin(LoginDetails details)
         {
             LoginResult result = userService.AttemptLogin(details);
-            HttpContext.Session.Set("User", Encoding.ASCII.GetBytes(details.Username));
+            if (result.LoginSucceeded)
+            {
+                User user = userService.GetUser(details.Username);
+                HttpContext.Session.Set("User", Encoding.ASCII.GetBytes(user.FirstName));
+                HttpContext.Session.Set("IsAdmin", BitConverter.GetBytes(user.IsAdmin == 1));
+            }
             return new JsonResult(result);
         }
 
