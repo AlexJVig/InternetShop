@@ -46,6 +46,47 @@ namespace InternetShop.Services
             }
         }
 
+        public bool DoesUserExists(string username)
+        {
+            using (var context = new ShopContext())
+            {
+                return context.Users.Count(u => u.Username == username) > 0;
+            }
+        }
+
+        public bool Register(RegisterDetails input)
+        {
+            if (input == null)
+                return false;
+
+            using (var context = new ShopContext())
+            {
+                User user = new User()
+                {
+                    FirstName = input.FirstName,
+                    LastName = input.LastName,
+                    Phone = input.Phone,
+                    Address = input.Address,
+                    ClosestBranchID = input.ClosestBranchID,
+                    Username = input.Username,
+                    Password = convertToMd5(input.Password),
+                    IsAdmin = false
+                };
+
+                try
+                {
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private string convertToMd5(string target)
         {
             var cipher = new MD5CryptoServiceProvider();

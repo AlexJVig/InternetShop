@@ -95,49 +95,49 @@
                             <div class="form-group">
                                 <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+                                    <input type="text" class="form-control" id="registerFirstName" placeholder="First Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+                                    <input type="text" class="form-control" id="registerLastName" placeholder="Last Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPhone" class="col-sm-2 control-label">Phone Number</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number">
+                                    <input type="text" class="form-control" id="registerPhone" placeholder="Phone Number">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputAddress" class="col-sm-2 control-label">Address</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="Address">
+                                    <input type="text" class="form-control" id="registerAddress" placeholder="Address">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Branch</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="branchesList">
+                                    <select class="form-control" id="registerBranch">
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputUser" class="col-sm-2 control-label">User Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputUser" placeholder="User Name">
+                                    <input type="text" class="form-control" id="registerUser" placeholder="User Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword" class="col-sm-2 control-label">Password</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                    <input type="password" class="form-control" id="registerPassword" placeholder="Password">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Register</button>
+                                    <button type="submit" class="btn btn-primary" id="registerSubmitBtn">Register</button>
                                 </div>
                             </div>
                         </form>
@@ -161,9 +161,9 @@
                         </div>
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                                <label for="inputUser" class="col-sm-2 control-label">User</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                    <input type="email" class="form-control" id="inputUser" placeholder="User">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -190,15 +190,15 @@
 
             $("#registerBtn").click(function () {
                 $.ajax('/Home/GetBranches').done(function (branches) {
-                
-                var options = '';
-                for (i=0; i<branches.length; i++) {
-                    options += '<option value=' + branches[i].branchID + '>' + branches[i].city + '</option>';
-                }
 
-                $('#registerModal #branchesList').html(options);
+                    var options = '';
+                    for (i = 0; i < branches.length; i++) {
+                        options += '<option value=' + branches[i].branchID + '>' + branches[i].city + '</option>';
+                    }
 
-                $('#registerModal').modal();
+                    $('#registerModal #registerBranch').html(options);
+
+                    $('#registerModal').modal();
 
                 }).fail(function () {
                     alert('failed to fetch branches');
@@ -210,6 +210,54 @@
 
             })
 
+
+            $('#registerSubmitBtn').click(function () {
+                var isValid = true;
+
+                $('#registerModal input').each(function () {
+                    if (!$(this).val()) {
+                        $(this).parents('.form-group').addClass('has-error')
+                        isValid = false;
+                    }
+                    else
+                        $(this).parents('.form-group').removeClass('has-error')
+                })
+
+                if (isValid) {
+                    $.ajax('/Users/CheckName?username=' + $('#registerUser').val())
+                        .done(function (isUserExist) {
+                            if (isUserExist) {
+                                alert('username already exists!');
+                                return;
+                            }
+
+                            $.ajax({
+                                url: '/Users/Register',
+                                method: 'POST',
+                                data: {
+                                    FirstName: $('#registerFirstName').val(),
+                                    LastName: $('#registerLastName').val(),
+                                    Phone: $('#registerPhone').val(),
+                                    Address: $('#registerAddress').val(),
+                                    ClosestBranchID: $('#registerBranch').val(),
+                                    Username: $('#registerUser').val(),
+                                    Password: $('#registerPassword').val(),
+                                }
+                            })
+                                .done(function (result) {
+                                    alert('register success!');
+                                    $('#registerModal').modal('hide');
+                                    $('#registerModal input').val('');
+                                })
+                                .fail(function () {
+                                    alert('error in register');
+                                })
+                        })
+                        .fail(function () {
+                            alert("failed to check username")
+                        })
+                }
+            })
         });
     </script>
 
