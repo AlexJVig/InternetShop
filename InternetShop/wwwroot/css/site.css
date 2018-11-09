@@ -81,13 +81,36 @@ h1 {
 }
 
 .logo {
-    text-shadow: 0 0 6px black;
-    color: white;
+    text-shadow: 0 0 6px green;
+    color: green;
     font-weight: bold;
     font-family: 'Songer', serif;
     letter-spacing: 1px;
+    margin-left: 20px;
 }
 
+.web-icon {
+    height: 75px;
+    width: 75px;
+}
+
+.web-title {
+    display: flex;
+    align-items: center;
+}
+
+.social-media{
+    float: right;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.follow-button {
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+    margin: 5px;
+}
 /*-----------------------------Branches-----------------------------*/
 .branch-list-item {
     cursor: pointer;
