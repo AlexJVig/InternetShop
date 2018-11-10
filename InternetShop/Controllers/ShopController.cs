@@ -45,5 +45,11 @@ namespace InternetShop.Controllers
         {
             return null;
         }
+
+        [HttpGet]
+        public IActionResult ProductsStock()
+        {
+            return Ok(shopService.GetProductsStock());
+        }
     }
 }

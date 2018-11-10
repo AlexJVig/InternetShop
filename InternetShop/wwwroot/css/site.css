@@ -58,6 +58,9 @@ h1 {
     /* align-self: flex-end; */
     /*padding-right: 0px;*/
 }
+
+.login a {
+    margin: 0 10px;
 }
 
 .navbar {

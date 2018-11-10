@@ -25,6 +25,7 @@ namespace InternetShop
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSession();
 
             services.AddDbContext<ShopContext>(options =>
                     options.UseSqlite("Data Source=MvcMovie.db"));
@@ -43,6 +44,8 @@ namespace InternetShop
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
