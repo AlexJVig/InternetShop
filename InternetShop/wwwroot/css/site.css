@@ -140,3 +140,7 @@ h1 {
     justify-content: space-between;
     height: "235px";
 }
+
+.dvd-canvas {
+    border: 1px solid #337ab7;
+}
