@@ -99,5 +99,24 @@ namespace InternetShop.Services
                 return context.Users.FirstOrDefault(u => u.Username == userName);
             }
         }
+
+        public BranchUsers[] GetBranchUsers()
+        {
+            using (var context = new ShopContext())
+            {
+                return context.Users.Join(context.Branches, u => u.ClosestBranchID, b => b.BranchID, (user, branch) => new
+                {
+                    user,
+                    branch
+                })
+                .GroupBy(x => x.branch.City)
+                .Select(x => new BranchUsers()
+                {
+                    BranchName = x.Key,
+                    UsersCount = x.Count()
+                })
+                .ToArray();
+            }
+        }
     }
 }

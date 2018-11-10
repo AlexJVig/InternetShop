@@ -79,5 +79,24 @@ namespace InternetShop.Services
               
             }
         }
+
+        public ProductStockResult[] GetProductsStock()
+        {
+            using (var context = new ShopContext())
+            {
+                return context.Inventory.Join(context.Products, i => i.ProductID, p => p.ProductID, (inventory, product) => new
+                {
+                    Product = product,
+                    Inventory = inventory
+                })
+                .GroupBy(x => x.Product.ProductName)
+                .Select(x => new ProductStockResult()
+                {
+                    ProductName = x.Key,
+                    Count = x.Sum(y=>y.Inventory.Quantity)
+                })
+                .ToArray();
+            }
+        }
     }
 }
