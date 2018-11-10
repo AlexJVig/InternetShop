@@ -43,5 +43,10 @@ namespace InternetShop.Controllers
         {
             return Ok(userService.DoesUserExists(username));
         }
+
+        public IActionResult UsersPerBranch()
+        {
+            return Ok(userService.GetBranchUsers());
+        }
     }
 }
