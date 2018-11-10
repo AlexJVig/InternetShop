@@ -208,6 +208,8 @@
     <script>
         jQuery(function ($) {
 
+            //$.ajax('/Users/CheckName?username=a');
+
             function validateInputs(parent) {
                 var isValid = true;
 
@@ -225,7 +227,7 @@
 
             // Register
 
-            $("#registerBtn").click(function () {
+            $("#registerBtn").click(function (e) {
                 $.ajax('/Home/GetBranches').done(function (branches) {
 
                     var options = '';
@@ -238,12 +240,14 @@
                     $('#registerModal').modal();
 
                 }).fail(function () {
-                    alert('failed to fetch branches');
-                })
+                    console.log('failed to fetch branches');
+                    })
+
+                e.preventDefault();
             })
 
 
-            $('#registerSubmitBtn').click(function () {
+            $('#registerSubmitBtn').click(function (e) {
                 var isValid = validateInputs('#registerModal');
 
                 if (isValid) {
@@ -273,23 +277,25 @@
                                     $('#registerModal input').val('');
                                 })
                                 .fail(function () {
-                                    alert('error in register');
+                                    console.log('error in register');
                                 })
                         })
                         .fail(function () {
-                            alert("failed to check username")
+                            console.log("failed to check username")
                         })
                 }
+
+                e.preventDefault();
             })
 
             // Login
 
-            $("#loginBtn").click(function () {
+            $("#loginBtn").click(function (e) {
                 $('#loginModal').modal();
-
+                e.preventDefault();
             })
 
-            $('#loginSubmitBtn').click(function () {
+            $('#loginSubmitBtn').click(function (e) {
                 var isValid = validateInputs('#loginModal');
 
                 if (isValid) {
@@ -309,19 +315,21 @@
                             location.reload()
                         })
                         .fail(function () {
-                            alert("login failed");
+                            console.log("login failed");
                         })
                 }
+                e.preventDefault();
             })
 
-            $('#logoutBtn').click(function () {
+            $('#logoutBtn').click(function (e) {
                 $.ajax('/Users/Logout')
                     .done(function (result) {
                         location.reload()
                     })
                     .fail(function () {
-                        alert("logout failed");
+                        console.log("logout failed");
                     })
+                e.preventDefault();
             })
         });
     </script>

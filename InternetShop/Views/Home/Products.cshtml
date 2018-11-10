@@ -168,11 +168,7 @@
             $(".page-wrapper").addClass("toggled");
     });
 
-    function displayEditForm(categories) {
-
-    }
-
-    $('#editBtn').click(function () {
+    $('#editBtn').click(function (e) {
         $.ajax('/Shop/GetAllCategories').done(function (categories) {
 
             var name = $('#product-name').text();
@@ -204,11 +200,13 @@
             $('#saveBtn').css('display', 'inline-block');
 
         }).fail(function () {
-            alert('failed to fetch categories');
-        })
+            console.log('failed to fetch categories');
+            })
+
+        e.preventDefault();
     })
 
-    $(".view-product-btn").click(function () {
+    $(".view-product-btn").click(function (e) {
         var productId = $(this).parents('.card').attr('product-id');
         $.ajax('/Home/GetProduct?id=' + productId).done(function (product) {
 
@@ -227,9 +225,10 @@
 
             $('#productModal').modal();
         }).fail(function () {
-            alert('failed to fetch product');
+            console.log('failed to fetch product');
         })
 
+        e.preventDefault();
     })
 
 });</script>
