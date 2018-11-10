@@ -92,7 +92,7 @@ h1 {
 }
 
 .logo {
-    text-shadow: 0 0 10px green;
+    text-shadow: 0 0 8px green;
     color: green;
     font-weight: bold;
     font-family: 'Songer', serif;
@@ -140,18 +140,4 @@ h1 {
     display: flex;
     justify-content: space-between;
     height: "235px";
-}
-/*-----------------------------Branches-----------------------------*/
-.branch-list-item {
-    cursor: pointer;
-}
-    .branch-list-item:hover {
-        background: #f2f2f2;
-    }
-
-li.branch-list-title {
-    background-color: lightgray;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
 }

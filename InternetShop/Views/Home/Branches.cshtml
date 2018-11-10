@@ -1,9 +1,10 @@
-﻿@model IEnumerable<InternetShop.Models.Branch>
+@model IEnumerable<InternetShop.Models.Branch>
 
 @{
     ViewData["Title"] = "Branches";
 }
 
+<link rel="stylesheet" href="~/css/branches.css" />
 <div class="row">
     <div class="col-sm-3">
         <ul class="list-group">
@@ -12,10 +13,41 @@
             </li>
             @foreach (var item in Model)
             {
-            <li type="button" class="list-group-item branch-list-item" id="@item.BranchID">
-                @item.City
-            </li>
+                <li type="button" class="list-group-item branch-list-item" id="@item.BranchID">
+                    @item.City
+                </li>
             }
+        </ul>
+
+        <ul class="list-group" id="branch-details" style="display:none;">
+            <li type="button" class="list-group-item current-branch" id="cb">
+                <div class="cb-card-title">
+                    <svg id="cb-x-card" class="cb-x-card">
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                    </svg>
+                    <h4 id="cbCity"></h4>
+                </div>
+                <p id="cbAddress"></p>
+                <p id="cbPhoneNumber"></p>
+                <table id="cbOpeningHours" border="0">
+                    <tr>
+                        <td>Sunday - Thursday:&nbsp;&nbsp;</td>
+                        <td id="cbSundayThursday"></td>
+                    </tr>
+                    <tr>
+                        <td>Friday:&nbsp;&nbsp;</td>
+                        <td id="cbFriday"></td>
+                    </tr>
+                    <tr>
+                        <td>Saturday:&nbsp;&nbsp;</td>
+                        <td id="cbSaturday"></td>
+                    </tr>
+                </table>
+                <div id="cbForcast">
+                    <div class="loader"></div>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="col-sm-9">
@@ -25,9 +57,28 @@
 </div>
 
 <script type='text/javascript'>
+    function weather(lat, lon) {
+        var api_url = 'http://api.openweathermap.org/data/2.5/weather?lat=' +
+            lat + '&lon=' +
+            lon + '&units=metric&appid=42f325f217132a2fa4b282b44d4a873e';
+
+        $.ajax({
+            url: api_url,
+            method: 'GET',
+            success: function (data) {
+
+                var tempr = data.main.temp;
+                var icon = data.weather[0].icon;
+
+                $('#cbForcast').text(tempr + '°');
+                $('#cbForcast').append('<img src=http://openweathermap.org/img/w/' + icon + '.png>');
+            }
+        });
+    }
+
     // When the user select branch:
     // 1. zooms in
-    // 2. show the infobox with the current branch details
+    // 2. show the card with the current branch details
     // 3. mark the currect branch list item
     function branchSelected(args, branchListItem) {
         var pushpin;
@@ -40,19 +91,30 @@
 
         $("li.branch-list-item").css('background-color', 'white');
         $(branchListItem).css('background-color', '#f2f2f2');
+        $("#branch-details").css('display', 'inherit');
 
         map.setView({ center: pushpin.getLocation(), zoom: 15 });
-        infobox.setOptions({
-            location: pushpin.getLocation(),
-            title: pushpin.metadata.city,
-            description: "&#8226 " + pushpin.metadata.address + "<br>&#8226 " + pushpin.metadata.phoneNumber + "<br>&#8226 " + pushpin.metadata.openingHours,
-            visible: true
-        });
+        $("#cbCity").text(pushpin.metadata.city);
+        $("#cbAddress").text(pushpin.metadata.address);
+        $("#cbPhoneNumber").text(pushpin.metadata.phoneNumber);
+        $("#cbSundayThursday").text(pushpin.metadata.sundayThursday);
+        $("#cbFriday").text(pushpin.metadata.friday);
+        $("#cbSaturday").text(pushpin.metadata.saturday);
+        weather(pushpin.getLocation().latitude, pushpin.getLocation().longitude);
     }
 
-    // When the user closes the infobox the map zooms out
+    $("#cb-x-card").click(function () {
+        $("#branch-details").css('display', 'none');
+        $("li.branch-list-item").css('background-color', 'white');
+        map.setView({
+            center: new Microsoft.Maps.Location(31.96482358762261, 34.99964556250001),
+            zoom: 8
+        });
+    });
+
+    // When the user closes the card the map zooms out
     // unmark the currect branch list item
-    function infoboxClosed(args) {
+    function infoboxClosed() {
         if (!infobox.getVisible()) {
             $("li.branch-list-item").css('background-color', 'white');
             map.setView({
@@ -82,16 +144,6 @@
             map.entities.push(pushpin);
             Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => { branchSelected(args); });
         }
-
-        // Add the generic infobox, set to invisible
-        infobox = new Microsoft.Maps.Infobox(location, {
-            visible: false,
-            showPointer: false,
-            maxHeight: 1500,
-            offset: new Microsoft.Maps.Point(0,50)
-        });
-        Microsoft.Maps.Events.addHandler(infobox, 'infoboxChanged', (args) => { infoboxClosed(args); });
-        infobox.setMap(map);
     }
 
     // Handel list iten click

@@ -13,8 +13,12 @@ namespace InternetShop.Models
 
         public double Longitude { get; set; }
 
-        public string OpeningHours { get; set; }
-
         public string PhoneNumber { get; set; }
+
+        public string SundayThursday { get; set; }
+
+        public string Friday { get; set; }
+
+        public string Saturday { get; set; }
     }
 }
