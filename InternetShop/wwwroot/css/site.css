@@ -131,6 +131,12 @@ h1 {
 .collapse {
     padding: 0px;
 }
+
+.video-canvas {
+    display: flex;
+    justify-content: space-between;
+    height: "235px";
+}
 /*-----------------------------Branches-----------------------------*/
 .branch-list-item {
     cursor: pointer;
