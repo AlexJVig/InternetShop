@@ -12,6 +12,7 @@ namespace InternetShop.Controllers
     {
         ShopContext sp = new ShopContext();
         ShopService shopService = new ShopService();
+        ProductsPageModel model = new ProductsPageModel();
     
         private void LoadUserData()
         {
@@ -42,10 +43,25 @@ namespace InternetShop.Controllers
             return View(sp.Branches.AsEnumerable());
         }
 
-        public IActionResult Products(string searchTerm)
+        public IActionResult Products(string searchTerm, int categoryId)
         {
             LoadUserData();
-            return View(shopService.SearchProducts(searchTerm ?? string.Empty));
+
+            if (categoryId > 0)
+            {
+                model.Products = shopService.GetProductsByCategory(categoryId);
+            }
+            else
+            {
+                model.Products = shopService.SearchProducts(searchTerm ?? string.Empty);
+            }
+
+            if (model.Categories == null)
+            {
+                model.Categories = shopService.GetAllCategories();
+            }
+
+            return View(model);
         }
 
         public IActionResult Analytics()

@@ -35,9 +35,12 @@ namespace InternetShop.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateProduct(int id)
+        public IActionResult UpdateProduct(int id, [FromBody]Product product)
         {
-            return null;
+            if (shopService.UpdateProduct(id, product))
+                return Ok();
+            else
+                return StatusCode(500);
         }
 
         [HttpDelete]
