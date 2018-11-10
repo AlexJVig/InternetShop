@@ -92,13 +92,17 @@ h1 {
 }
 
 .logo {
-    text-shadow: 0 0 6px green;
+    text-shadow: 0 0 10px green;
     color: green;
     font-weight: bold;
     font-family: 'Songer', serif;
     letter-spacing: 1px;
     margin-left: 20px;
+    transition: font-size 1s;
 }
+    .logo:hover {
+        font-size: 65px;
+    }
 
 .web-icon {
     height: 75px;
