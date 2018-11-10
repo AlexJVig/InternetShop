@@ -92,13 +92,17 @@ h1 {
 }
 
 .logo {
-    text-shadow: 0 0 6px green;
+    text-shadow: 0 0 8px green;
     color: green;
     font-weight: bold;
     font-family: 'Songer', serif;
     letter-spacing: 1px;
     margin-left: 20px;
+    transition: font-size 1s;
 }
+    .logo:hover {
+        font-size: 65px;
+    }
 
 .web-icon {
     height: 75px;
@@ -131,17 +135,9 @@ h1 {
 .collapse {
     padding: 0px;
 }
-/*-----------------------------Branches-----------------------------*/
-.branch-list-item {
-    cursor: pointer;
-}
-    .branch-list-item:hover {
-        background: #f2f2f2;
-    }
 
-li.branch-list-title {
-    background-color: lightgray;
-    font-weight: bold;
+.video-canvas {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    height: "235px";
 }
