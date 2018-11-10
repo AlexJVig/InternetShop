@@ -52,11 +52,7 @@ h1 {
 
 .login {
     display: flex;
-    /* align-items: flex-end; */
-    /* align-content: flex-end; */
     justify-content: flex-end;
-    /* align-self: flex-end; */
-    /*padding-right: 0px;*/
 }
 
 .login a {
@@ -95,8 +91,8 @@ h1 {
 }
 
 .logo {
-    text-shadow: 0 0 8px green;
-    color: green;
+    text-shadow: 0 0 8px #337ab7;
+    color: #337ab7;
     font-weight: bold;
     font-family: 'Songer', serif;
     letter-spacing: 1px;
