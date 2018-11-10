@@ -2,9 +2,16 @@
 @{
     ViewData["Title"] = "Analytics";
 }
-
-<div id="graphs">
-
+@if(!(bool)ViewData["IsAdmin"])
+{
+    <h1>You are not permitted to view this page!</h1>
+    return;
+}
+<div class="container-fluid" style="display:flex">
+    <div id="graphs">
+    </div>
+    <div id="pieChart">
+    </div>
 </div>
 <style>
 
@@ -28,8 +35,50 @@
         }
 </style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
+@*<script src="http://d3js.org/d3.v4.min.js"></script>*@
+<script src="../js/d3pie.min.js"></script>
 
 <script>
+    // Initialize empty array
+
+    var data = [];
+
+    // Get JSON data and wait for the response
+    d3.json("/Users/UsersPerBranch", function (error, json) {
+        $.each(json, function (d, i) {
+            data.push({
+                label: i.branchName,
+                value: i.usersCount
+            })
+        })
+
+        var pie = new d3pie("pieChart", {
+            "header": {
+                "title": {
+                    "text": "Users Per Branch",
+                    "fontSize": 22,
+                    "font": "verdana"
+                },
+            },
+
+            "size": {
+                "canvasHeight": 400,
+                "canvasWidth": 590
+            },
+
+            "data": {
+                "content": data
+            },
+
+            "labels": {
+                "outer": {
+                    "pieDistance": 32
+                }
+            }
+        });
+    });
+
+
     // set the dimensions of the canvas
     var margin = { top: 40, right: 20, bottom: 70, left: 40 },
         width = 600 - margin.left - margin.right,
@@ -50,7 +99,7 @@
     var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
-        .ticks(10);
+        .ticks(5);
 
 
     // add the SVG element
@@ -62,11 +111,11 @@
             "translate(" + margin.left + "," + margin.top + ")");
 
     // load the data
-    d3.json("/Users/UsersPerBranch", function (error, data) {
+    d3.json("/Shop/ProductsStock", function (error, data) {
 
         data.forEach(function (d) {
-            d.Letter = d.branchName;
-            d.Freq = +d.usersCount;
+            d.Letter = d.productName;
+            d.Freq = +d.count;
         });
 
         // scale the range of the data
