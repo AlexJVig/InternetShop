@@ -43,3 +43,5 @@ Thumbs.db
 InternetShop/bower_components/
 
 InternetShop/obj/
+
+InternetShop/InternetShop\.csproj
