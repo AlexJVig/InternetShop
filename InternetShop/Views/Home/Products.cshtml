@@ -36,14 +36,17 @@
     <!-- sidebar-wrapper  -->
 
     <main class="page-content">
-        <section class="container-fluid">
+        <section class="container-fluid"> 
             <form asp-controller="Home" asp-action="Products" class="form-inline search-form">
-                <input class="form-control mr-sm-2" type="text" name="SearchTerm" placeholder="Search" aria-label="Search">
+                <div class="form-group"> 
+                <input class="form-control" type="text" name="SearchTerm" placeholder="Search" aria-label="Search" style="width:250px">
                 <input type="submit" class="btn btn-default" value="Filter" />
+                </div>
             </form>
+            <div id="products">
                 @foreach (var product in Model.Products)
                 {
-                    <div class="col-sm-4">
+                    <!-- <div class="col-sm-4"> -->
                         <div class="card" product-id="@product.ProductID">
                             <img class="card-img-top" src="@product.Image" alt="@product.ProductName" style='display:block; width:150px;height:150px;'>
                             <div class="card-body">
@@ -52,8 +55,9 @@
                                 <a href="#" class="btn btn-primary view-product-btn">Go somewhere</a>
                             </div>
                         </div>
-                    </div>
+                    <!-- </div> -->
                 }
+                </div>
                 <!-- Modal -->
                 <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -95,7 +99,7 @@
                                             <button type="button" class="btn btn-success btn-sm" id="saveBtn" style="display:none">
                                                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
                                             </button>
-                                            <button type="button" class="btn btn-danger btn-sm">
+                                            <button type="button" class="btn btn-danger btn-sm" id="deleteBtn">
                                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
                                             </button>
                                         </div>
@@ -211,7 +215,7 @@ function getBase64(file, onLoadCallback) {
                     ProductID: productId,
                     Image: productImage
                 }
-             }).done(function (product) {
+             }).done(function () {
                  alert('save success!');
                  location.reload();
          })
@@ -221,6 +225,23 @@ function getBase64(file, onLoadCallback) {
 
         });
        
+        e.preventDefault();
+    })
+
+    $('#deleteBtn').click(function(e){
+        var productId = $(this).parents('#productModal').attr('product-id');
+
+        $.ajax({
+                url: '/Shop/DeleteProduct?id='+productId,
+                method: 'DELETE',
+             }).done(function () {
+                 alert('delete success!');
+                 location.reload();
+         })
+         .fail(function(error){
+             console.log('delete product')
+         })
+
         e.preventDefault();
     })
 

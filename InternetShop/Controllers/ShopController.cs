@@ -35,9 +35,12 @@ namespace InternetShop.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DelectProduct(int id)
+        public IActionResult DeleteProduct(int id)
         {
-            return null;
+            if (shopService.DeleteProduct(id))
+                return Ok();
+            else
+                return StatusCode(500);
         }
 
         [HttpGet]

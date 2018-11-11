@@ -1,146 +1,153 @@
 @font-face {
-    font-family: 'Songer';
-    src: url('../fonts/songer.otf');
+  font-family: 'Songer';
+  src: url('../fonts/songer.otf');
 }
 
 body {
-    padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /* Carousel */
 .slide {
-    width: 100%;
-    margin-bottom: 30px;
+  width: 100%;
+  margin-bottom: 30px;
 }
 
 .carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+  font-size: 20px;
+  line-height: 1.4;
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+.carousel-inner .item img[src$='.svg'] {
+  width: 100%;
 }
 
 /* QR code generator */
 #qrCode {
-    margin: 15px;
+  margin: 15px;
 }
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+  /* Hide captions */
+  .carousel-caption {
+    display: none;
+  }
 }
 
 header {
-    padding: 10px;
+  padding: 10px;
 }
 h1 {
-    margin: 0;
+  margin: 0;
 }
 
 .login {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .login a {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 .navbar {
-    margin-bottom: 10;
+  margin-bottom: 10;
 }
 
-
 #product-image {
-    width: 170px;
-    height: 170px;
+  width: 170px;
+  height: 170px;
 }
 
 .row-title {
-    padding-left: 0;
-    font-weight: bold;
+  padding-left: 0;
+  font-weight: bold;
 }
 
 .product-detail-row {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .card {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .product-info {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .search-form {
-    margin-bottom: 30px;
+  margin-bottom: 40px;
+  margin-left: 400px;
 }
 
 .logo {
-    text-shadow: 0 0 8px #337ab7;
-    color: #337ab7;
-    font-weight: bold;
-    font-family: 'Songer', serif;
-    letter-spacing: 1px;
-    margin-left: 20px;
-    transition: font-size 1s;
+  text-shadow: 0 0 8px #337ab7;
+  color: #337ab7;
+  font-weight: bold;
+  font-family: 'Songer', serif;
+  letter-spacing: 1px;
+  margin-left: 20px;
+  transition: font-size 1s;
 }
-    .logo:hover {
-        font-size: 65px;
-    }
+.logo:hover {
+  font-size: 65px;
+}
 
 .web-icon {
-    height: 75px;
-    width: 75px;
+  height: 75px;
+  width: 75px;
 }
 
 .web-title {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.social-media{
-    float: right;
-    display: flex;
-    justify-content: flex-end;
+.social-media {
+  float: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .follow-button {
-    height: 40px;
-    width: 40px;
-    border-radius: 10px;
-    margin: 5px;
+  height: 40px;
+  width: 40px;
+  border-radius: 10px;
+  margin: 5px;
 }
 
-.header  {
-    display: flex;
-    align-items: center;
+.header {
+  display: flex;
+  align-items: center;
 }
 
 .collapse {
-    padding: 0px;
+  padding: 0px;
 }
 
 .video-canvas {
-    display: flex;
-    justify-content: space-between;
-    height: "235px";
+  display: flex;
+  justify-content: space-between;
+  height: '235px';
 }
 
 .dvd-canvas {
-    border: 1px solid #337ab7;
+  border: 1px solid #337ab7;
+}
+
+#products {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+  /* grid-column-gap: 50px; */
 }
