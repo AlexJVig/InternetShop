@@ -78,11 +78,10 @@ namespace InternetShop.Services
                 targetProduct.Description = product.Description;
                 targetProduct.Price = product.Price;
                 targetProduct.CategoryID = product.CategoryID;
-                targetProduct.Image = product.Image;
 
                 try
                 {
-                    context.Products.Add(product);
+                    context.Products.Update(targetProduct);
                     context.SaveChanges();
                 }
                 catch (Exception)

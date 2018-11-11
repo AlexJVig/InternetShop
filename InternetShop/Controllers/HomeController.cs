@@ -98,5 +98,14 @@ namespace InternetShop.Controllers
         {
             return Ok(sp.Branches.AsEnumerable());
         }
+
+        [HttpPut]
+        public IActionResult UpdateProduct(int id, [FromBody]Product product)
+        {
+            if (shopService.UpdateProduct(id, product))
+                return Ok();
+            else
+                return StatusCode(500);
+        }
     }
 }

@@ -34,15 +34,6 @@ namespace InternetShop.Controllers
                 return StatusCode(500);
         }
 
-        [HttpPut]
-        public IActionResult UpdateProduct(int id, [FromBody]Product product)
-        {
-            if (shopService.UpdateProduct(id, product))
-                return Ok();
-            else
-                return StatusCode(500);
-        }
-
         [HttpDelete]
         public IActionResult DelectProduct(int id)
         {
