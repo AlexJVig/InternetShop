@@ -50,6 +50,12 @@ namespace InternetShop.Controllers
             return View(shopService.SearchProducts(searchTerm ?? string.Empty));
         }
 
+        public IActionResult About(string searchTerm)
+        {
+            LoadUserData();
+            return View();
+        }
+
         public IActionResult Analytics()
         {
             LoadUserData();
