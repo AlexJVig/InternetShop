@@ -9,6 +9,6 @@ namespace InternetShop.ML
     public class ProductPrediction
     {
         [ColumnName("Score")]
-        public float price;
+        public float Price;
     }
 }
