@@ -68,16 +68,19 @@ namespace InternetShop.Services
             }
         }
 
-        public bool UpdateProduct(int id, Product product)
+        public bool UpdateProduct(Product product)
         {
             using (var context = new ShopContext())
             {
-                var targetProduct = context.Products.Where(p => p.ProductID == id).FirstOrDefault();
+                var targetProduct = context.Products.Where(p => p.ProductID == product.ProductID).FirstOrDefault();
 
                 targetProduct.ProductName = product.ProductName;
                 targetProduct.Description = product.Description;
                 targetProduct.Price = product.Price;
                 targetProduct.CategoryID = product.CategoryID;
+
+                if (product.Image != null)
+                    targetProduct.Image = product.Image;
 
                 try
                 {
