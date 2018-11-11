@@ -146,15 +146,15 @@
         $.ajax('/Shop/GetAllCategories').done(function (categories) {
 
             var name = $('#product-name').text();
-            var input = "<input type='text' class='form-control' value=\"" + name + "\">";
+            var input = "<input id='product-name-input' type='text' class='form-control' value=\"" + name + "\">";
             $('#product-name').html(input);
 
             var price = $('#product-price').text();
-            input = "<input type='text' class='form-control' value=\"" + price + "\">";
+            input = "<input id='product-price-input' type='text' class='form-control' value=\"" + price + "\">";
             $('#product-price').html(input);
 
             var category = $('#product-category').text();
-            input = "<select class='form-control'>";
+            input = "<select id='product-category-input' class='form-control'>";
             for (i = 0; i < categories.length; i++) {
                 input += '<option value=' + categories[i].categoryID;
                 if (categories[i].name == category)
@@ -165,7 +165,7 @@
             $('#product-category').html(input);
 
             var description = $('#product-description').text();
-            input = "<textarea class='form-control' rows='3'>" + description + "</textarea>";
+            input = "<textarea id='product-description-input' class='form-control' rows='3'>" + description + "</textarea>";
             $('#product-description').html(input);
 
             $('#imageFile').css('display', 'block');
@@ -177,6 +177,50 @@
             console.log('failed to fetch categories');
             })
 
+        e.preventDefault();
+    })
+
+function getBase64(file, onLoadCallback) {
+    return new Promise(function(resolve, reject) {
+        if (!file)
+            resolve(null);
+            
+        var reader = new FileReader();
+        reader.onload = function() { resolve(reader.result); };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+
+    $('#saveBtn').click(function(e) {
+        var productId = $(this).parents('#productModal').attr('product-id');
+        
+        var file = document.querySelector('#imageFile').files[0];
+        var promise = getBase64(file);
+        promise.then(function(productImage) {
+            console.log(productImage);
+              $.ajax({
+                url: '/Home/UpdateProduct',
+                method: 'POST',
+                data: {
+                    Price: $('#product-price-input').val(),
+                    Description: $('#product-description-input').val(),
+                    CategoryID: $('#product-category-input').val(),
+                    ProductName: $('#product-name-input').val(),
+                    ProductID: productId,
+                    Image: productImage
+                }
+             }).done(function (product) {
+                 alert('save success!');
+                 location.reload();
+         })
+         .fail(function(error){
+             alert('failed to save product. check image file size')
+         })
+
+        });
+       
         e.preventDefault();
     })
 
@@ -196,6 +240,8 @@
             $('#editBtn').css('display', 'inline-block');
             $('#saveBtn').css('display', 'none');
             $('#imageFile').css('display', 'none');
+
+            $('#productModal').attr('product-id', productId);
 
             $('#productModal').modal();
         }).fail(function () {

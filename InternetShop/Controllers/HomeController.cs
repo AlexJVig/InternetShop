@@ -105,10 +105,10 @@ namespace InternetShop.Controllers
             return Ok(sp.Branches.AsEnumerable());
         }
 
-        [HttpPut]
-        public IActionResult UpdateProduct(int id, [FromBody]Product product)
+        [HttpPost]
+        public IActionResult UpdateProduct(Product product)
         {
-            if (shopService.UpdateProduct(id, product))
+            if (shopService.UpdateProduct(product))
                 return Ok();
             else
                 return StatusCode(500);
