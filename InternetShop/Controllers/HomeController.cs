@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using InternetShop.Models;
 using InternetShop.Services;
@@ -14,7 +12,8 @@ namespace InternetShop.Controllers
     {
         ShopContext sp = new ShopContext();
         ShopService shopService = new ShopService();
-
+        ProductsPageModel model = new ProductsPageModel();
+    
         private void LoadUserData()
         {
             byte[] userBytes;
@@ -44,10 +43,25 @@ namespace InternetShop.Controllers
             return View(sp.Branches.AsEnumerable());
         }
 
-        public IActionResult Products(string searchTerm)
+        public IActionResult Products(string searchTerm, int categoryId)
         {
             LoadUserData();
-            return View(shopService.SearchProducts(searchTerm ?? string.Empty));
+
+            if (categoryId > 0)
+            {
+                model.Products = shopService.GetProductsByCategory(categoryId);
+            }
+            else
+            {
+                model.Products = shopService.SearchProducts(searchTerm ?? string.Empty);
+            }
+
+            if (model.Categories == null)
+            {
+                model.Categories = shopService.GetAllCategories();
+            }
+
+            return View(model);
         }
 
         public IActionResult About(string searchTerm)
@@ -89,6 +103,15 @@ namespace InternetShop.Controllers
         public IActionResult GetBranches()
         {
             return Ok(sp.Branches.AsEnumerable());
+        }
+
+        [HttpPut]
+        public IActionResult UpdateProduct(int id, [FromBody]Product product)
+        {
+            if (shopService.UpdateProduct(id, product))
+                return Ok();
+            else
+                return StatusCode(500);
         }
     }
 }

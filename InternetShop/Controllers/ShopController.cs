@@ -34,12 +34,6 @@ namespace InternetShop.Controllers
                 return StatusCode(500);
         }
 
-        [HttpPut]
-        public IActionResult UpdateProduct(int id)
-        {
-            return null;
-        }
-
         [HttpDelete]
         public IActionResult DelectProduct(int id)
         {

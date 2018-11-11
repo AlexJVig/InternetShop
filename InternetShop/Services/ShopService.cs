@@ -68,6 +68,51 @@ namespace InternetShop.Services
             }
         }
 
+        public bool UpdateProduct(int id, Product product)
+        {
+            using (var context = new ShopContext())
+            {
+                var targetProduct = context.Products.Where(p => p.ProductID == id).FirstOrDefault();
+
+                targetProduct.ProductName = product.ProductName;
+                targetProduct.Description = product.Description;
+                targetProduct.Price = product.Price;
+                targetProduct.CategoryID = product.CategoryID;
+
+                try
+                {
+                    context.Products.Update(targetProduct);
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        public bool DeleteProduct(int id)
+        {
+            using (var context = new ShopContext())
+            {
+                var targetProduct = context.Products.Where(p => p.ProductID == id).FirstOrDefault();
+                context.Products.Remove(targetProduct);
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
         public ProductResult GetProduct(int id)
         {
             using (var context = new ShopContext())
@@ -96,6 +141,14 @@ namespace InternetShop.Services
                     Count = x.Sum(y=>y.Inventory.Quantity)
                 })
                 .ToArray();
+            }
+        }
+
+        public IList<Product> GetProductsByCategory(int id)
+        {
+            using (var context = new ShopContext())
+            {
+                return context.Products.Where(p => p.CategoryID == id).ToList();
             }
         }
     }
