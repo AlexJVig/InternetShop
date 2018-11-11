@@ -313,6 +313,8 @@
                                 alert('incorrect user/password');
                                 return;
                             }
+
+                            localStorage.setItem("loggedUser", $('#loginUser').val());
                             location.reload()
                         })
                         .fail(function () {
@@ -325,7 +327,8 @@
             $('#logoutBtn').click(function (e) {
                 $.ajax('/Users/Logout')
                     .done(function (result) {
-                        location.reload()
+                        location.reload();
+                        localStorage.removeItem("loggedUser");
                     })
                     .fail(function () {
                         console.log("logout failed");

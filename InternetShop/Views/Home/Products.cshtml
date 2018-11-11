@@ -184,10 +184,15 @@
         var productId = $(this).parents('.card').attr('product-id');
         $.ajax('/Home/GetProduct?id=' + productId).done(function (product) {
             console.log(product);
-
-            // localstorage
-            localStorage.setItem(product.productID, JSON.stringify(product));
-            console.log(JSON.parse(localStorage.getItem(product.productID)));
+            
+            // get current user array
+            var loggedUser = localStorage.getItem("loggedUser") ? localStorage.getItem("loggedUser") : "unknown";
+            var userProducts = JSON.parse(localStorage.getItem(loggedUser));
+            if (!userProducts) {
+                userProducts = [];
+            }
+            userProducts.push(JSON.stringify(product));
+            localStorage.setItem(loggedUser, JSON.stringify(userProducts));
 
             $('#productModal #product-name').html(product.productName);
             $('#productModal #product-price').html(product.price);
