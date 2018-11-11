@@ -109,7 +109,7 @@ namespace InternetShop.Controllers
         public IActionResult UpdateProduct(Product product)
         {
             if (shopService.UpdateProduct(product))
-                return Ok();
+                return Ok(product);
             else
                 return StatusCode(500);
         }

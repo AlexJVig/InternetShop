@@ -218,9 +218,14 @@ function getBase64(file, onLoadCallback) {
                     ProductID: productId,
                     Image: productImage
                 }
-             }).done(function () {
+             }).done(function (product) {
                  alert('save success!');
-                 location.reload();
+                 var productEl = $('.card[product-id=' + product.productID +']');
+                 productEl.find('.card-title').html(product.productName);
+                 productEl.find('.card-text').html(product.description);
+                 productEl.find('.card-img-top').attr('src', product.image);
+                 $('#productModal').modal("hide");
+
          })
          .fail(function(error){
              alert('failed to save product. check image file size')
@@ -237,9 +242,11 @@ function getBase64(file, onLoadCallback) {
         $.ajax({
                 url: '/Shop/DeleteProduct?id='+productId,
                 method: 'DELETE',
-             }).done(function () {
+             }).done(function (id) {
                  alert('delete success!');
-                 location.reload();
+                 $('.card[product-id=' + id +']').remove();
+                $('#productModal').modal("hide");
+
          })
          .fail(function(error){
              console.log('delete product')

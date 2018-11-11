@@ -38,7 +38,7 @@ namespace InternetShop.Controllers
         public IActionResult DeleteProduct(int id)
         {
             if (shopService.DeleteProduct(id))
-                return Ok();
+                return Ok(id);
             else
                 return StatusCode(500);
         }
