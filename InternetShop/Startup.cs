@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using InternetShop.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML.Legacy;
+using InternetShop.ML;
 
 namespace InternetShop
 {
@@ -54,5 +56,11 @@ namespace InternetShop
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        //public async Task<string> TrainModel()
+        //{
+        //    PredictionModel<ProductsVector, ProductPrediction> model = await ProductsModelBuilder.Train();
+        //    return ProductsModelBuilder.Evaluate(model);
+        //}
     }
 }
