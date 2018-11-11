@@ -223,7 +223,8 @@ function getBase64(file, onLoadCallback) {
                  var productEl = $('.card[product-id=' + product.productID +']');
                  productEl.find('.card-title').html(product.productName);
                  productEl.find('.card-text').html(product.description);
-                 productEl.find('.card-img-top').attr('src', product.image);
+                 if (product.image)
+                    productEl.find('.card-img-top').attr('src', product.image);
                  $('#productModal').modal("hide");
 
          })
