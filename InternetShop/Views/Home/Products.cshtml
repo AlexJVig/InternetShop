@@ -49,7 +49,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">@product.ProductName</h5>
                                 <p class="card-text">@product.Description</p>
-                                <a href="#" class="btn btn-primary view-product-btn">Go somewhere</a>
+                                <a href="#" class="btn btn-primary view-product-btn">View Product</a>
                             </div>
                         </div>
                     </div>
@@ -183,8 +183,12 @@
     $(".view-product-btn").click(function (e) {
         var productId = $(this).parents('.card').attr('product-id');
         $.ajax('/Home/GetProduct?id=' + productId).done(function (product) {
+            console.log(product);
 
-            console.log(product)
+            // localstorage
+            localStorage.setItem(product.productID, JSON.stringify(product));
+            console.log(JSON.parse(localStorage.getItem(product.productID)));
+
             $('#productModal #product-name').html(product.productName);
             $('#productModal #product-price').html(product.price);
             $('#productModal #product-category').html(product.category.name);
