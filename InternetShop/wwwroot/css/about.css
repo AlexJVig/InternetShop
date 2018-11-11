@@ -1,0 +1,9 @@
+﻿div.about {
+    display: flex;
+    align-self: center;
+    width: 75%;
+    margin-top: 10px;
+}
+p {
+    column-count: 2;
+}
